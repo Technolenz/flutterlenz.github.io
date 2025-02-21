@@ -18,7 +18,7 @@ class AppConstants {
       title: "Flutterlenz Portfolio",
       description: "A responsive portfolio built with Flutter.",
       imageUrl: "assets_main/images/flutterlenz.png",
-      link: "#",
+      link: "https://technolenz.github.io/flutterlenz.github.io/",
       category: PortfolioCategory.App,
       useCase: UseCase.productivity,
       techStack: TechStack.vanillaFlutter,
