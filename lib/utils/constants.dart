@@ -7,7 +7,8 @@ class AppConstants {
   static const List<PortfolioItem> portfolioItems = [
     PortfolioItem(
       title: "Unit Converter",
-      description: "A Unit Converter, specializing in all type of units conversion built with Flutter, with responsiveness and compilations into Android and Web.",
+      description:
+          "A Unit Converter, specializing in all type of units conversion built with Flutter, with responsiveness and compilations into Android and Web.",
       imageUrl: "assets_main/images/fappproj/unitconverter-icon-512.png",
       link: "https://freelenz-unit-converter.web.app/welcome.html",
       category: PortfolioCategory.App,
@@ -30,6 +31,15 @@ class AppConstants {
       link: "https://word-pair-app.web.app/welcome.html",
       category: PortfolioCategory.App,
       useCase: UseCase.productivity,
+      techStack: TechStack.vanillaFlutter,
+    ),
+    PortfolioItem(
+      title: "QR4ALL",
+      description: "A beautiful qr code scanner and generator",
+      imageUrl: "assets_main/images/fappproj/qr4all_512.png",
+      link: "https://qr4all.web.app/welcome.html",
+      category: PortfolioCategory.App,
+      useCase: UseCase.utilities,
       techStack: TechStack.vanillaFlutter,
     ),
   ];

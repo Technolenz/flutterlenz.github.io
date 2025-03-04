@@ -36,7 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   url_launcher: ^6.1.5
   font_awesome_flutter: ^10.7.0
-  video_player: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -57,11 +56,11 @@ flutter:
   assets:
     - assets_main/images/flutterlenz.png
     - assets_main/images/fappproj/unitconverter-icon-512.png
-    - assets_main/videos/vidbgvidmain.mp4
     - assets_main/images/about/mission.jpg
     - assets_main/images/about/vision.jpg
     - assets_main/images/about/values.jpg
     - assets_main/images/fappproj/wordpairapp_icon-512.png
+    - assets_main/images/fappproj/qr4all_512.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

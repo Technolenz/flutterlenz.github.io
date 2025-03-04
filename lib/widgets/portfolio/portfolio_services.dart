@@ -5,7 +5,8 @@ class PortfolioSec extends StatefulWidget {
   final Function(int, double) scrollToPortfolioIndex;
   final Function(int) updateCurrentIndex;
 
-  const PortfolioSec({super.key, 
+  const PortfolioSec({
+    super.key,
     required this.portfolioScrollController,
     required this.scrollToPortfolioIndex,
     required this.updateCurrentIndex,
@@ -32,16 +33,19 @@ class _PortfolioSecState extends State<PortfolioSec> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 600; // Adjust breakpoint as needed
+
     return Container(
       color: Colors.deepPurple,
-      width: MediaQuery.of(context).size.width * 0.8,
-      height: MediaQuery.of(context).size.height * 1.15,
+      width: double.infinity, // Take full width
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: isSmallScreen ? 10 : 20),
       child: Column(
         children: [
           Text(
             'Portfolio',
             style: TextStyle(
-              fontSize: 36,
+              fontSize: isSmallScreen ? 28 : 36, // Smaller font for small screens
               fontWeight: FontWeight.bold,
               color: Colors.orangeAccent,
             ),
@@ -54,37 +58,79 @@ class _PortfolioSecState extends State<PortfolioSec> {
               children: [
                 Text('Filter by:', style: TextStyle(color: Colors.white)),
                 SizedBox(height: 10),
-                Row(
-                  children: [
-                    _buildDropdown<PortfolioCategory>(
-                      label: 'Category',
-                      value: selectedCategory,
-                      items: PortfolioCategory.values,
-                      onChanged: (value) => setState(() {
-                        selectedCategory = value;
-                        _currentPortfolioIndex = 0;
-                      }),
-                    ),
-                    _buildDropdown<UseCase>(
-                      label: 'Use Case',
-                      value: selectedUseCase,
-                      items: UseCase.values,
-                      onChanged: (value) => setState(() {
-                        selectedUseCase = value;
-                        _currentPortfolioIndex = 0;
-                      }),
-                    ),
-                    _buildDropdown<TechStack>(
-                      label: 'Tech Stack',
-                      value: selectedTechStack,
-                      items: TechStack.values,
-                      onChanged: (value) => setState(() {
-                        selectedTechStack = value;
-                        _currentPortfolioIndex = 0;
-                      }),
-                    ),
-                  ],
-                ),
+                // Stack dropdowns vertically on small screens
+                if (isSmallScreen) ...[
+                  _buildDropdown<PortfolioCategory>(
+                    label: 'Category',
+                    value: selectedCategory,
+                    items: PortfolioCategory.values,
+                    onChanged: (value) => setState(() {
+                      selectedCategory = value;
+                      _currentPortfolioIndex = 0;
+                    }),
+                  ),
+                  SizedBox(height: 10),
+                  _buildDropdown<UseCase>(
+                    label: 'Use Case',
+                    value: selectedUseCase,
+                    items: UseCase.values,
+                    onChanged: (value) => setState(() {
+                      selectedUseCase = value;
+                      _currentPortfolioIndex = 0;
+                    }),
+                  ),
+                  SizedBox(height: 10),
+                  _buildDropdown<TechStack>(
+                    label: 'Tech Stack',
+                    value: selectedTechStack,
+                    items: TechStack.values,
+                    onChanged: (value) => setState(() {
+                      selectedTechStack = value;
+                      _currentPortfolioIndex = 0;
+                    }),
+                  ),
+                ] else ...[
+                  // Display dropdowns in a row on larger screens
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildDropdown<PortfolioCategory>(
+                          label: 'Category',
+                          value: selectedCategory,
+                          items: PortfolioCategory.values,
+                          onChanged: (value) => setState(() {
+                            selectedCategory = value;
+                            _currentPortfolioIndex = 0;
+                          }),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: _buildDropdown<UseCase>(
+                          label: 'Use Case',
+                          value: selectedUseCase,
+                          items: UseCase.values,
+                          onChanged: (value) => setState(() {
+                            selectedUseCase = value;
+                            _currentPortfolioIndex = 0;
+                          }),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: _buildDropdown<TechStack>(
+                          label: 'Tech Stack',
+                          value: selectedTechStack,
+                          items: TechStack.values,
+                          onChanged: (value) => setState(() {
+                            selectedTechStack = value;
+                            _currentPortfolioIndex = 0;
+                          }),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
@@ -92,7 +138,7 @@ class _PortfolioSecState extends State<PortfolioSec> {
           // Responsive card sizing
           LayoutBuilder(
             builder: (context, constraints) {
-              final maxCardWidth = constraints.maxWidth > 600 ? 400.0 : 300.0;
+              final maxCardWidth = constraints.maxWidth > 600 ? 400.0 : constraints.maxWidth * 0.8;
               return Column(
                 children: [
                   SizedBox(
@@ -101,7 +147,7 @@ class _PortfolioSecState extends State<PortfolioSec> {
                       controller: widget.portfolioScrollController,
                       scrollDirection: Axis.horizontal,
                       physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 10 : 20),
                       itemCount: getFilteredItems().length,
                       itemBuilder: (context, index) {
                         return MouseRegion(
@@ -123,16 +169,16 @@ class _PortfolioSecState extends State<PortfolioSec> {
                   ),
                   SizedBox(height: 20),
                   // Page indicators
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 8,
                     children: List.generate(
                       getFilteredItems().length,
-                          (index) => GestureDetector(
+                      (index) => GestureDetector(
                         onTap: () => widget.scrollToPortfolioIndex(index, maxCardWidth),
                         child: Container(
                           width: 12,
                           height: 12,
-                          margin: EdgeInsets.symmetric(horizontal: 4),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: index == _currentPortfolioIndex
@@ -158,34 +204,29 @@ class _PortfolioSecState extends State<PortfolioSec> {
     required List<T> items,
     required Function(T?) onChanged,
   }) {
-    return Expanded(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: DropdownButtonFormField<T>(
-              decoration: InputDecoration(
-                labelText: label,
-                labelStyle: TextStyle(color: Colors.white),
-                border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+    return DropdownButtonFormField<T>(
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: TextStyle(color: Colors.white),
+        border: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+      ),
+      dropdownColor: Colors.deepPurple,
+      value: value,
+      items: [
+        DropdownMenuItem(
+          value: null,
+          child: Text('All', style: TextStyle(color: Colors.white)),
+        ),
+        ...items.map((item) => DropdownMenuItem(
+              value: item,
+              child: Text(
+                item.toString().split('.').last,
+                style: TextStyle(color: Colors.white),
               ),
-              dropdownColor: Colors.deepPurple,
-              value: value,
-              items: [
-              DropdownMenuItem(
-              value: null,
-              child: Text('All', style: TextStyle(color: Colors.white)),
-              ),
-              ...items.map((item) => DropdownMenuItem(
-                value: item,
-                child: Text(
-                  item.toString().split('.').last,
-                  style: TextStyle(color: Colors.white),
-                ),
-              ))
-    ],
-    onChanged: (value) => onChanged(value),
-    ),
-    ),
+            )),
+      ],
+      onChanged: (value) => onChanged(value),
     );
-    }
+  }
 }
