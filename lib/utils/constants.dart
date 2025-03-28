@@ -42,5 +42,23 @@ class AppConstants {
       useCase: UseCase.utilities,
       techStack: TechStack.vanillaFlutter,
     ),
+    PortfolioItem(
+      title: "FileGhost",
+      description: "A beautifully themed mobile app for hiding files securely",
+      imageUrl: "assets_main/images/fappproj/fileghost.png",
+      link: "https://fileghost.web.app",
+      category: PortfolioCategory.App,
+      useCase: UseCase.utilities,
+      techStack: TechStack.vanillaFlutter,
+    ),
+    PortfolioItem(
+      title: "FileGhost",
+      description: "A Gesture based chatbot powered my Gemini",
+      imageUrl: "assets_main/images/fappproj/wisp.png",
+      link: "https://wisp.web.app/welcome.html",
+      category: PortfolioCategory.App,
+      useCase: UseCase.productivity,
+      techStack: TechStack.firebase,
+    ),
   ];
 }
