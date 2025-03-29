@@ -21,5 +21,14 @@ dev_dependencies:
 
 flutter:
   assets:
-    - assets_main/images
+    - assets_main/images/about/mission.jpg
+    - assets_main/images/about/values.jpg
+    - assets_main/images/about/vision.jpg
+    - assets_main/images/fappproj/fileghost.png
+    - assets_main/images/fappproj/qr4all_512.png
+    - assets_main/images/fappproj/unitconverter-icon-512.png
+    - assets_main/images/fappproj/wisp.png
+    - assets_main/images/fappproj/wordpairapp_icon-512.png
+    - assets_main/images/flutterlenz.png
+    - assets_main/images/fappproj/mdlenz.png
   uses-material-design: true
